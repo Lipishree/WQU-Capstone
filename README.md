@@ -2,6 +2,7 @@ This repository is created as part of CAPSTONE project submission for WQU 2015-2
 It contains python sample code, that demonstrates short-term trading using a combination of monentum, volatility and trend indicators
 The name of the project is CAPSTONE.py
                                                             Submodules:
+                                                            
       > CAP_STCK_ENTRY This module allows user to enter his choice of stock through file or enter tickers manually on screen
   
       > STOCK_DATA This This module fetches the historical data of the tickers entered above
