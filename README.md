@@ -22,10 +22,15 @@ It contains python sample code, that demonstrates short-term trading using a com
 The project has been developed in Windows OS in Python 2.7 environment
 
 Apart from using the standard libraries, additional library TA-Lib is used
+
 Installing the TA-Lib could be done as mentioned in 'https://mrjbq7.github.io/ta-lib/install.html '
+
 Installation error was encountered while following the above.
+
 So from http://www.lfd.uci.edu/~gohlke/pythonlibs/ downloaded and installed 'pycuda 2016.1.2+cuda7518 cp27 cp27m win_amd64.whl'
+
 Installation is simple pip install
+
           pip install pycuda 2016.1.2+cuda7518 cp27 cp27m win_amd64.whl
 
 
