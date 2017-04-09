@@ -1,5 +1,9 @@
 """
-Manual entry of stocks either by through file or manual typing
+The user is prompted to select a 'F' or 'M' on screen
+This module allows the user to manually enter the tickers on screen
+when selected 'M'
+or upload the file containing tickers
+when selevted 'F'
 @author: lipi
 """
 import os
@@ -14,7 +18,7 @@ def stock_entry_option():
     if r != 'F' and r != 'M':
         raise ValueError("\nOops! wrong entry\Enter only F or M")
     
-    if r == 'F':    
+    if r == 'F':#for upload through file    
         user_input = raw_input("Enter your ticker file: ")
         assert os.path.exists(user_input), "I did not find the file at, "+str(user_input)
         #open the file
@@ -22,12 +26,13 @@ def stock_entry_option():
         S1 = xlsx.parse(0)
         StockTickerArray = (S1['TICKERS'].values.tolist())
         
-    else:    
+    else: #to upload manually   
         StockCount = input ('Input the number of stocks in the portfolio: ')
         S1 = list()
         for i in range(1,StockCount+1):
             StockTicker = raw_input ('Enter Stock Ticker '+str(i)+': ')
             StockTickerArray.append(str(StockTicker)) 
             
+    #Broad Market Index is entered         
     StockTickerArray.append('^GSPC')        
     return StockTickerArray
