@@ -18,11 +18,12 @@ def mean_reversion_and_trading_strategy(stock_data):
     # Index data variable
     Index_Close = stock_data['^GSPC'].Close.values
     Index_MA = talib.SMA(stock_data['^GSPC'].Close.values,40)
-    #Bollinger bands of 14days SMA
+    #Bollinger bands Broad Market
     bands_i = talib.BBANDS(stock_data['^GSPC'].Close.values,40,1.75,1.75)
     Index_BH = bands_i[0]
     Index_BM = bands_i[1]
     Index_BL = bands_i[2]
+    #ADX of Broad Market
     Index_ADX = talib.ADX(stock_data['^GSPC'].High.values,\
                           stock_data['^GSPC'].Low.values,\
                           stock_data['^GSPC'].Close.values,10)                     
