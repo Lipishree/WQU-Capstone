@@ -19,8 +19,9 @@ if __name__ == '__main__':
     data = fetch_stock_hist_data(tickers)
     #Get most volatile stocks
     volatile,data = get_volatile_stocks(data)
-    # Get Indicators for trading
+    #Get Indicators for trading
     indicators,data,tic = mean_reversion_and_trading_strategy(data)
+    #Plot Stock Data with Indicators
     plot_signals_and_indicators(tic,data,indicators)
     
     
