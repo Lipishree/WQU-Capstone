@@ -18,8 +18,6 @@ It contains python sample code, that demonstrates short-term trading using a com
       
       PLOT_INDICATORS The Stock data along with the indicators are plotted for user refrence
   
-  [1]From [http://www.lfd.uci.edu/~gohlke/pythonlibs/]
-     downloaded and installed [pycuda 2016.1.2+cuda7518 cp27 cp27m win_amd64.whl] that fetches all the Indicators
 
 Strategy:
 Entering Long Positions:
@@ -64,3 +62,4 @@ Once the slippage is calculated, in our back-testing, we assume that we are buyi
 P` = P +/- (P * Slippage)    #Depending on Long or /Short entry
 The brokerage and slippage is very important in short-term trading because, the positions are entered and exited frequently over short period of time and each stock encounters slippage and brokerage. If we don’t use slippage and brokerage in simulation, then we might get great profits, but in reality we might not be benefiting with the brokerage and slippage in place.  So, back testing with these is very important 
 
+  
