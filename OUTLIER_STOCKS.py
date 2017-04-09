@@ -1,5 +1,9 @@
 """
 Get the outliers as most volatile stocks
+The daily change measure of each stock is calculated 
+The volatility of each stock is calculated
+If the daily change and volatility varies greatly, 
+then they are plotted as outliers
 @author: lipi
 """
 import matplotlib.pyplot as plt
@@ -19,13 +23,15 @@ def get_volatile_stocks(stock_data):
         data['Daily_Change'] = data['Close'].diff()
         daily_change_measure.append(np.sqrt(np.mean(data['Daily_Change']**2)))       
         labels.append(tic)
-    
+        
+    #Prepare plot
     plt.plot()
     plt.grid(True)
     plt.xlabel('Log of overall change metric')
     plt.ylabel('Volatility metric')
     plt.suptitle('Daily Volatility of Stocks versus Overall Trend')    
     
+    #Find the Outliers
     outlier_mask = (daily_change_measure < np.percentile(daily_change_measure, 95)) & (volatility_measure < np.percentile(volatility_measure, 98))
     outliers = []
     for label, x, y, z in zip(labels, daily_change_measure, volatility_measure, outlier_mask):        
