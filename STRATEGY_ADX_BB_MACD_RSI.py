@@ -26,19 +26,21 @@ def device_strategy(data,cash):
     stop = 0
     longs = 0
     short = 0
-    brokerage_per = 0.0045
+    brokerage_per = 0.0045#Brokerage per share trade
     trades = 0
     
     for i in range(0,len(x)):
         pct_change = 0
         #Taking Positions===============================================
+        #Identify MACD and signal line crossover and set indicator
         if x.iloc[i-1]['MACD'] < x.iloc[i-1]['SIGNAL']\
         and x.iloc[i]['MACD'] > x.iloc[i]['SIGNAL']:
             macd_cross = 'Up'
         if x.iloc[i-1]['MACD'] > x.iloc[i-1]['SIGNAL']\
         and x.iloc[i]['MACD'] < x.iloc[i]['SIGNAL']:
             macd_cross = 'Down'  
-            
+        
+        #When no position is held try entering trades
         if pos == 'None' and i > 1:
                 #Slippage
                 d1 = x.iloc[i]['Open'] - x.iloc[i-1]['Close']
@@ -46,6 +48,8 @@ def device_strategy(data,cash):
                 if d2 == 0:
                     d2 = d1
                     
+                #1. Go Long strategy
+                #¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬    
                 if x.iloc[i-1]['RSI'] <= 30 and x.iloc[i]['RSI'] > 30:#RSI cross 30 from below
                     if macd_cross == 'Down' and x.iloc[i]['MACD'] < x.iloc[i]['SIGNAL']:
                         if x.iloc[i]['ADX'] > 25 and x.iloc[i]['Index ADX'] > 25: 
@@ -59,6 +63,9 @@ def device_strategy(data,cash):
                                 cash = cash - (P*position)
                                 trades+=1
                                 longs+=1
+                                
+                #1. Go Short strategy
+                #¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬                
                 if x.iloc[i-1]['RSI'] >= 70 and x.iloc[i]['RSI'] < 70:#RSI cross 70 from above
                     if macd_cross == 'Up' and x.iloc[i]['MACD'] > x.iloc[i]['SIGNAL']:
                         if x.iloc[i]['ADX'] > 25 and x.iloc[i]['Index ADX'] > 25:
@@ -72,9 +79,11 @@ def device_strategy(data,cash):
                                 cash = cash + (S*position)
                                 trades+=1
                                 short+=1
-        #Exit Strategy================================================
+                                
+        #Exit Strategy¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         if pos == 'Long':
             stop_down = P - (P*0.05)
+            #Lock Profit on Long
             if x.iloc[i-1]['Close'] >= x.iloc[i]['UPBAND']:
                 #Exit Position by locking profit------------------
                 pos = 'None'
@@ -84,6 +93,7 @@ def device_strategy(data,cash):
                 cash = cash + (S*position)
                 pct_change =  (S/P-1)
                 position = 0
+            #Stop Loss execution on Long   
             elif P > x.iloc[i-1]['Close']:
                 if x.iloc[i-1]['Close'] <= stop_down:
                     #Exit Position by Stop Loss-------------------------
@@ -95,6 +105,7 @@ def device_strategy(data,cash):
                     position = 0
                     stop+=1
         if pos == 'Short':
+            #Lock Profit on Short
             stop_up = S + (S*0.05)
             if x.iloc[i-1]['Close'] <= x.iloc[i]['LOWBAND']:
                 #Exit Position by locking profit--------------------
@@ -105,6 +116,7 @@ def device_strategy(data,cash):
                 cash = cash - (P*position)
                 pct_change =  (S/P-1)
                 position = 0
+            #Stop Loss execution on Short    
             elif S < x.iloc[i-1]['Close']:
                 if x.iloc[i-1]['Close'] >= stop_up:
                     #Exit Position by Stop Loss--------------------------
@@ -115,6 +127,7 @@ def device_strategy(data,cash):
                     cash = cash - (SL*position)
                     position = 0
                     stop+=1
+        #Exit on End of the trade            
         if i == len(x) - 1 and pos <> 'None':
             E = x.iloc[i-1]['Close']
             if pos == 'Long':
@@ -131,7 +144,7 @@ def device_strategy(data,cash):
             pos = 'None'
             
         pnl.append(pct_change) 
-    x['PnL'] = pnl
+    x['PnL'] = pnl#Append computed PnL
     
     return x,trades,longs,short,stop   
             
