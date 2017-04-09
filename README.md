@@ -19,50 +19,14 @@ It contains python sample code, that demonstrates short-term trading using a com
       PLOT_INDICATORS The Stock data along with the indicators are plotted for user refrence
   
 
-Strategy:
-Entering Long Positions:
+The project has been developed in Windows OS in Python 2.7 environment
 
-1.	When the MACD has crossed the signal line from above to down
-2.	When RSI crosses above 30 from below
-3.	When ADX of both Stock and Broader Market is above 25
-4.	Close has fallen below Lower Bollinger Band	
-
-Entering Short Positions:
-
-1.	When the MACD has crossed the signal line from down to above
-2.	When RSI crosses below 70 from above
-3.	When ADX of both Stock and Broader Market is above 25
-4.	Close has risen above Bollinger Band
-
-Exiting Long:
-
-When the close touches or crosses the upper Bollinger band
-
-Exiting Short:
-
-When the close touches or crosses the lower Bollinger band
-
-Stop Loss:
-While holding long or short, if the price falls further or rises up, a stop loss should be in place to minimize the losses. We use here, 5% of the Close. If while holding Long, the price falls further then Execute stop-loss at 5% less than current Close. While holding short, execute stop-loss at 5% higher than current Close. 
-The 5% has been decided by trial and error method in running the simulation 
-Brokerage:
-
-A standard brokerage charge per share is considered assuming trading on ‘Lightspeed trading’
-
-Slippage:
-
-Slippage percentage is calculated by dividing "d1," the distance between the theoretical order entry price and the actual fill price, by "d2," the distance between the theoretical order price and the worst possible fill price. As an example, consider the following for a "buy" order:
-Theoretical entry price: 1060
-Actual fill price: 1064
-Bar high (worst possible) long entry price: 1100
-d1 = 1064 - 1060 = 4
-d2 = 1100 - 1060 = 40
-Slippage = d1 / d2 = 4 / 40 = 10%
-Once the slippage is calculated, in our back-testing, we assume that we are buying a stock considering the slippage:
-P` = P +/- (P * Slippage)    #Depending on Long or /Short entry
-The brokerage and slippage is very important in short-term trading because, the positions are entered and exited frequently over short period of time and each stock encounters slippage and brokerage. If we don’t use slippage and brokerage in simulation, then we might get great profits, but in reality we might not be benefiting with the brokerage and slippage in place.  So, back testing with these is very important 
-
-From http://www.lfd.uci.edu/~gohlke/pythonlibs/ downloaded and installed 'pycuda 2016.1.2+cuda7518 cp27 cp27m win_amd64.whl'
+Apart from using the standard libraries, additional library TA-Lib is used
+Installing the TA-Lib could be done as mentioned in 'https://mrjbq7.github.io/ta-lib/install.html '
+Installation error was encountered while following the above.
+So from http://www.lfd.uci.edu/~gohlke/pythonlibs/ downloaded and installed 'pycuda 2016.1.2+cuda7518 cp27 cp27m win_amd64.whl'
+Installation is simple pip install
+          pip install pycuda 2016.1.2+cuda7518 cp27 cp27m win_amd64.whl
 
 
 
